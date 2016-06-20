@@ -1,0 +1,41 @@
+{
+  "name": "utf16string",
+  "version": "0.1.0",
+  "description": "UTF16 string conversion and other character utilities (unicode, emojis, etc)",
+  "main": "dist/utf16string",
+  "typings": "dist/utf16string",
+  "scripts": {
+    "prepublish": "tsc -p .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "utf16",
+    "unicode",
+    "emoji"
+  ],
+  "author": {
+    "name": "Rune Bjerke",
+    "email": "rune@never.no",
+    "url": "http://never.no"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sp00x/node-utf16string.git"
+  },
+  "homepage": "https://github.com/sp00x/node-utf16string",
+  "bugs": {
+    "url": "https://github.com/sp00x/node-utf16string/issues"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.1",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.0.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-typescript": "^0.8.0",
+    "grunt-typescript-using-tsconfig": "^0.7.1",
+    "request": "^2.72.0",
+    "tsify": "^0.16.0",
+    "typescript": "^1.8.10"
+  }
+}

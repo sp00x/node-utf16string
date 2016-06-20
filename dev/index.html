@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>emoji test</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<script src="../dist_browserify/utf16string.min.js" type="text/javascript"></script>
+        <script>
+
+var emojiImagesPath = "file:///C:/source/js/nodejs_misc_scripts/render-backend/emojis/";
+
+var entityMap = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': '&quot;', "'": '&#39;', "/": '&#x2F;' };
+function escapeHtml(string)
+{
+    return String(string).replace(/[&<>"'\/]/g, function (s)
+    {
+        return entityMap[s];
+    });
+}
+
+function updateText()
+{
+    var inputTextEl = document.getElementById("inputText");
+    var outputEl = document.getElementById("output");
+
+    var chars = UTF16String.splitStringIntoChars(inputTextEl.value);
+    console.dir(chars);
+
+
+    var ranges = UTF16String.splitChars(inputTextEl.value, {
+        whitespace: false,        
+        newLine: false,
+        emoji: true,
+        emojiReset: true
+    })
+
+    //console.dir(ranges);
+
+    var out = ranges.map(function(range)
+    {
+        if (range.type == "emoji")
+        {
+            var ch = range.chars[0];
+            return "<img src=\""
+                + emojiImagesPath
+                + (ch.types.apple || ch.types.twitter || ch.types.google || ch.types.one)
+                + "\" title=\"" + escapeHtml(ch.name) + "\">";
+        }
+        else
+        {
+            return escapeHtml(UTF16String.mergeStringFromChars(range.chars));
+        }
+    })
+
+    //console.dir(out);
+
+    outputEl.innerHTML = out.join("");
+}
+
+        </script>
+        <style>
+
+#inputText { width: 800px; height: 100px; }
+
+#output
+{
+    font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    width: 640px;
+    font-size: 24pt;
+}
+
+#output img
+{
+    height: 24pt;
+}
+
+        </style>
+    </head>
+    <body onload="updateText()">
+        <p>Type some stuff here:</p>
+        <textarea id="inputText" onchange="updateText()">Simple smileys 😄😃😀😊☺️😉 and then some multi-char ones: 👫👪👬👭💏💑👨‍👨‍👦👨‍👨‍👦‍👦👨‍👨‍👧 and then some skin color ones ☝🏻☝🏼☝🏽☝🏾☝🏿🎅🏻🎅🏼🎅🏽🎅🏾🎅🏿 and then some flags: 🇳🇴🇯🇲🇬🇩🇫🇮🇨🇬🇧🇦</textarea>
+        <p>..and then see some stuff here:</p>
+        <div id="output"></div>
+    </body>
+</html>
